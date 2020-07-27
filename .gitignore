@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Sensible data and passwords
+netbot/keys.py
+
+# IDE config
+.vscode/
