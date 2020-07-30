@@ -5,6 +5,10 @@
 # 
 # -- Run unit tests:
 #   python3 setup.py test
+# 
+# -- Run inside venv:
+#   python setup.py develop 
+#   venv/bin/netbot
 
 
 from netbot import __version__
