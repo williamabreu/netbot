@@ -9,14 +9,6 @@ class Routerboard:
 
     def api_connect(self, username, password, port=8728):
         try:
-            # version < 6.43
-            self.__api = librouteros.connect(
-                host=self.__host,
-                username=username,
-                password=password,
-                login_method=librouteros.token
-            )
-        except librouteros.exceptions.TrapError:
             # version >= 6.43
             self.__api = librouteros.connect(
                 host=self.__host,
@@ -24,6 +16,19 @@ class Routerboard:
                 password=password,
                 login_method=librouteros.plain
             )
+        except:
+            try:
+                # version < 6.43
+                self.__api = librouteros.connect(
+                    host=self.__host,
+                    username=username,
+                    password=password,
+                    login_method=librouteros.token
+                )
+            except:
+                raise ConnectionError('Connection error')
+                # raise ConnectionError('Check if the API is enabled in the router')
+                # raise ConnectionError('Check if the firewall or ACL is blocking the connection')
 
     def api_disconnect(self):
         self.__api.close()
