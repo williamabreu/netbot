@@ -34,11 +34,19 @@ class Routerboard:
         self.__api.close()
 
     def get_identity(self):
-        path = self.__api.path('system', 'identity')
-        identity = tuple(path)[0]['name']
+        identity = None
+        try:
+            path = self.__api.path('system', 'identity')
+            identity = tuple(path)[0]['name']
+        except:
+            pass
         return identity
     
     def get_routerboard(self):
-        path = self.__api.path('system', 'routerboard')
-        rb = tuple(path)[0]
-        return rb
+        routerboard = None
+        try:
+            path = self.__api.path('system', 'routerboard')
+            routerboard = tuple(path)[0]
+        except:
+            pass
+        return routerboard
