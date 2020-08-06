@@ -3,6 +3,7 @@
 # import paramiko
 import json
 from netbot.mikrotik.Worker import MikrotikWorker
+from netbot.mikrotik.WorkerEnableAPI import MikrotikWorkerEnableAPI
 from netbot.zabbix.Zabbix import Zabbix
 from netbot.proc.OutputHandler import OutputHandler
 
@@ -26,26 +27,30 @@ def balance(length):
 
 
 def main():
-    zabbix_hosts = None
-    
-    with open('zabbix_hosts.json') as fp:
-        zabbix_hosts = json.load(fp)
-    
-    hosts = [host['ip'] for host in zabbix_hosts]
-    slices = balance(len(hosts))
-    threads = []
-    # print(len(slices))
-    
-    for interval in slices:
-        worker = MikrotikWorker(hosts[interval])
-        worker.start()
-        threads.append(worker)
-    
-    for thread in threads:
-        thread.join()
-    
-    output = OutputHandler.get_instance()
-    output.save()
+    try:
+        zabbix_hosts = None
+        
+        with open('b.json') as fp:
+            zabbix_hosts = json.load(fp)
+        
+        hosts = [host['ip'] for host in zabbix_hosts]
+        slices = balance(len(hosts))
+        threads = []
+        # print(len(slices))
+        
+        for interval in slices:
+            # worker = MikrotikWorker(hosts[interval])
+            worker = MikrotikWorkerEnableAPI(hosts[interval])
+            worker.start()
+            threads.append(worker)
+        
+        # for thread in threads:
+        #     thread.join()
+    except:
+        print('FATAL ERROR!')
+    # finally:
+    #     output = OutputHandler.get_instance()
+    #     output.save()
     
 
 if __name__ == '__main__':

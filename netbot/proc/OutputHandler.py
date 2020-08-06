@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class OutputHandler:
     __INSTANCE = None
 
@@ -14,8 +17,9 @@ class OutputHandler:
         self.__cached_data.append(','.join(map(str, args)))
 
     def save(self):
-        with open('RESULT.csv', 'w') as fp:
-            fp.write('IP,IDENTITY,MODEL\n')
+        filename = datetime.now().isoformat().replace(':', '') + '.csv'
+        with open(filename, 'w') as fp:
+            # fp.write('IP,IDENTITY,MODEL\n')
             for line in self.__cached_data:
                 fp.write(line + '\n')
                 
