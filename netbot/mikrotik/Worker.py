@@ -17,5 +17,5 @@ class MikrotikWorker(threading.Thread):
                 rb.api_connect(Keys.username, Keys.password)
                 self.__output.register(ip, rb.get_identity(), rb.get_routerboard()['model'])
                 rb.api_disconnect()
-            except ConnectionError as e:
-                self.__output.register(ip, 'ERROR', e)
+            except: # ConnectionError as e:
+                self.__output.register(ip, 'ERROR', None)
